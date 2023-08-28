@@ -35,7 +35,9 @@ const Header = () => {
       {token ? (
         <div className="main-nav-item">
           <span>{username}</span>
+          <Link to="/user">
           <i className="fa fa-user-circle"></i>
+          </Link>
           <button onClick={handleSignOut}>
             <i className="fas fa-power-off"></i>
           </button>
