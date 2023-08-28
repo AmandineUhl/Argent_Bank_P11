@@ -24,14 +24,14 @@ const Header = () => {
 
   return (
     <nav className="main-nav">
-      <div className="main-nav-logo">
+      <Link to="/" className="main-nav-logo">
         <img
           className="main-nav-logo-image"
           src="../../argentBankLogo.webp"
           alt="Argent Bank Logo"
         />
         <h1 className="sr-only">Argent Bank</h1>
-      </div>
+      </Link>
       {token ? (
         <div className="main-nav-item">
           <span>{username}</span>

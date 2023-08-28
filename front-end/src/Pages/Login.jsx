@@ -8,8 +8,12 @@ function Login() {
   const error = useSelector((state) => state.login.error);
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const rememberedUsername = localStorage.getItem("rememberedUsername") || "";
+  const rememberedPassword = localStorage.getItem("rememberedPassword") || "";
+  
+  const [username, setUsername] = useState(rememberedUsername);
+  const [password, setPassword] = useState(rememberedPassword);
+  const [rememberMe, setRememberMe] = useState(rememberedUsername ? true : false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,6 +23,13 @@ function Login() {
       const token = action.payload;
 
       if (token) {
+        if (rememberMe) {
+          localStorage.setItem("rememberedUsername", username);
+          localStorage.setItem("rememberedPassword", password);
+        } else {
+          localStorage.removeItem("rememberedUsername");
+          localStorage.removeItem("rememberedPassword");
+        }
         localStorage.setItem("token", token);
         navigate("/user");
       } else {
@@ -55,9 +66,15 @@ function Login() {
             />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
+            <input
+              type="checkbox"
+              id="remember-me"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+            />
             <label htmlFor="remember-me">Remember me</label>
           </div>
+
           <button className="sign-in-button">Sign In</button>
         </form>
       </section>
